@@ -186,6 +186,7 @@
           ref="confirmDialogRef"
           :selected="selected"
           :selectedPostId="selectedPostId"
+          type="post"
           @clear-selected="selected = []"
         />
         <PostDialog ref="postDialogRef" />

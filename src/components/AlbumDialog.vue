@@ -1,30 +1,22 @@
 <template>
-  <q-dialog v-model="isPostDialogOpen" persistent>
+  <q-dialog v-model="isAlbumDialogOpen" persistent>
     <q-card style="min-width: 400px">
       <q-card-section>
-        <div class="text-h6">{{ isEditing ? 'Edit Post' : 'Create New Post' }}</div>
+        <div class="text-h6">{{ isEditing ? 'Edit Album' : 'Create New Album' }}</div>
       </q-card-section>
 
       <q-card-section class="q-gutter-md">
-        <q-form @submit="savePost" ref="postData">
+        <q-form @submit="saveAlbum" ref="albumData">
           <div class="q-col-gutter-md">
             <q-input
-              v-model="postForm.title"
+              v-model="albumForm.title"
               label="Title"
               outlined
               :rules="[(val) => !!val || 'Title is required']"
               stack-label
             />
-            <q-input
-              v-model="postForm.body"
-              label="Body"
-              type="textarea"
-              outlined
-              stack-label
-              :rules="[(val) => !!val || 'Body is required']"
-            />
             <q-select
-              v-model="postForm.userId"
+              v-model="albumForm.userId"
               label="User"
               :options="users.map((u) => ({ label: u.name, value: u.id }))"
               :rules="[(val) => !!val || 'User is required']"
@@ -39,7 +31,7 @@
 
       <q-card-actions align="right">
         <q-btn flat label="Cancel" color="negative" v-close-popup />
-        <q-btn flat label="Save" color="primary" @click="savePost" />
+        <q-btn flat label="Save" color="primary" @click="saveAlbum" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -47,54 +39,52 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { usePostsStore } from 'src/stores/post-store';
-import type { Post } from 'src/types';
+import { useAlbumStore } from 'src/stores/album-store';
+// import type { Album } from 'src/types';
 
-const postStore = usePostsStore();
-const postData = ref(null);
+const albumStore = useAlbumStore();
+const albumData = ref(null);
 const isEditing = ref(false);
-const isPostDialogOpen = ref(false);
-const postForm = ref({
+const isAlbumDialogOpen = ref(false);
+const albumForm = ref({
   id: null,
   title: '',
-  body: '',
   userId: null,
 });
 const users = computed(() => {
-  return postStore.users;
+  return albumStore.users;
 });
 
-function openCreatePostDialog() {
+function openCreateAlbumDialog() {
   isEditing.value = false;
-  postForm.value = {
+  albumForm.value = {
     id: null,
     title: '',
-    body: '',
     userId: null,
   };
-  isPostDialogOpen.value = true;
+  isAlbumDialogOpen.value = true;
 }
-function openEditPostDialog(post) {
+function openEditAlbumDialog(album) {
   isEditing.value = true;
-  postForm.value = { ...post };
-  isPostDialogOpen.value = true;
+  albumForm.value = { ...album };
+  isAlbumDialogOpen.value = true;
 }
 
-async function savePost() {
-  const success = await postData.value.validate();
+async function saveAlbum() {
+  const success = await albumData.value.validate();
   if (success) {
     if (isEditing.value) {
-      await postStore.editPost(postForm.value);
+      await albumStore.editAlbum(albumForm.value);
     } else {
-      await postStore.addPost(postForm.value);
+      await albumStore.addAlbum(albumForm.value);
     }
   } else {
     throw Error('Please enter valid data');
   }
-  isPostDialogOpen.value = false;
+  isAlbumDialogOpen.value = false;
 }
 
-defineExpose({ isPostDialogOpen, openCreatePostDialog, openEditPostDialog });
+defineExpose({ isAlbumDialogOpen, openCreateAlbumDialog, openEditAlbumDialog });
 </script>
 
 <style></style>

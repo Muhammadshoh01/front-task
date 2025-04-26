@@ -16,8 +16,7 @@
           </q-tab-panel>
 
           <q-tab-panel name="photos" class="bg-cyan-1 text-dark text-center">
-            <div class="text-h6">Photos</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <AlbumTable />
           </q-tab-panel>
 
           <q-tab-panel name="todos" class="bg-green-1 text-dark text-center">
@@ -33,6 +32,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import PostTable from 'src/components/PostTable.vue';
+import AlbumTable from 'src/components/AlbumTable.vue';
 
 const tabs = ['posts', 'photos', 'todos'];
 const activeTab = ref(localStorage.getItem('activeTab') || tabs[0]);
