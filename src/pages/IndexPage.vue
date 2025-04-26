@@ -1,43 +1,45 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
-  </q-page>
+  <div>
+    <div class="q-gutter-y-md">
+      <q-card>
+        <q-tabs v-model="activeTab" class="bg-primary text-white" align="justify" narrow-indicator>
+          <q-tab name="posts" label="Posts" />
+          <q-tab name="photos" label="Photos" />
+          <q-tab name="todos" label="Todos" />
+        </q-tabs>
+
+        <q-separator />
+
+        <q-tab-panels v-model="activeTab" animated>
+          <q-tab-panel name="posts" class="bg-blue-1 text-dark text-center">
+            <PostTable />
+          </q-tab-panel>
+
+          <q-tab-panel name="photos" class="bg-cyan-1 text-dark text-center">
+            <div class="text-h6">Photos</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </q-tab-panel>
+
+          <q-tab-panel name="todos" class="bg-green-1 text-dark text-center">
+            <div class="text-h6">Todos</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
+import { ref, watch } from 'vue';
+import PostTable from 'src/components/PostTable.vue';
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1'
-  },
-  {
-    id: 2,
-    content: 'ct2'
-  },
-  {
-    id: 3,
-    content: 'ct3'
-  },
-  {
-    id: 4,
-    content: 'ct4'
-  },
-  {
-    id: 5,
-    content: 'ct5'
+const tabs = ['posts', 'photos', 'todos'];
+const activeTab = ref(localStorage.getItem('activeTab') || tabs[0]);
+
+watch(activeTab, (newTab): void => {
+  if (newTab) {
+    localStorage.setItem('activeTab', newTab);
   }
-]);
-
-const meta = ref<Meta>({
-  totalCount: 1200
 });
 </script>
