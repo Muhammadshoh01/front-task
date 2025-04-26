@@ -87,7 +87,7 @@ const bulkDelete = () => {
   props.selected.forEach((post) => {
     postStore.deletePost(post.id);
   });
-  emit('clear-selected'); //
+  emit('clear-selected');
   confirmBulkDelete.value = false;
   $q.notify({ type: 'negative', message: 'Deleted selected posts.' });
 };
@@ -98,7 +98,7 @@ const bulkFavorite = () => {
       postStore.toggleFavorite(post.id);
     }
   });
-  emit('clear-selected'); //
+  emit('clear-selected');
   confirmBulkFavorite.value = false;
   $q.notify({ type: 'positive', message: 'Added selected posts to favorites.' });
 };

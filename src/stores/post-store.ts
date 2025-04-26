@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { api } from 'src/boot/axios'; // your axios instance
+import { api } from 'src/boot/axios';
 
 interface Post {
   id: number;
@@ -79,7 +79,7 @@ export const usePostsStore = defineStore('posts', () => {
             users.value.find((u) => u.id === updatedPost.userId)?.name ||
             posts.value[index].username ||
             'Unknown',
-          isFavorite: posts.value[index].isFavorite ?? false, // <--- Ensure it's boolean
+          isFavorite: posts.value[index].isFavorite ?? false,
         };
       }
     } catch (error) {
@@ -100,12 +100,10 @@ export const usePostsStore = defineStore('posts', () => {
   async function fetchComments(postId: number) {
     const post = posts.value.find((p) => p.id === postId);
     if (post) {
-      // Fetch comments only if they are not already fetched
       if (post.comments.length === 0) {
         const res = await api.get(`/comments?postId=${postId}`);
         post.comments = res.data;
       }
-      // Toggle the visibility of comments
       post.commentsVisible = !post.commentsVisible;
     }
   }

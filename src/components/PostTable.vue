@@ -218,12 +218,11 @@ const titleFilter = ref('');
 const usernameFilter = ref([]);
 const favoriteFilter = ref('all'); // 'all', 'favorites', 'notFavorites'
 
-// Pagination, Selected, etc. (already you have)
 const pagination = ref({
   page: 1,
   rowsPerPage: Number(localStorage.getItem('rowsPerPage')) || 10,
 });
-const filter = ref(''); // (you already have this)
+const filter = ref('');
 const filteredPosts = computed(() => {
   return postStore.posts.filter((post) => {
     // 1. Title filter
