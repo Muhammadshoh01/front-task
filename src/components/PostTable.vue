@@ -226,14 +226,11 @@ const pagination = ref({
 const filter = ref('');
 const filteredPosts = computed(() => {
   return postStore.posts.filter((post) => {
-    // 1. Title filter
     const matchesTitle = post.title.toLowerCase().includes(titleFilter.value.toLowerCase());
 
-    // 2. Username filter
     const matchesUsername =
       usernameFilter.value.length === 0 || usernameFilter.value.includes(post.username);
 
-    // 3. Favorite status filter
     let matchesFavorite = true;
     if (favoriteFilter.value === 'favorites') {
       matchesFavorite = post.isFavorite;

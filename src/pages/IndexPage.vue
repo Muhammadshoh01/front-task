@@ -20,8 +20,7 @@
           </q-tab-panel>
 
           <q-tab-panel name="todos" class="bg-green-1 text-dark text-center">
-            <div class="text-h6">Todos</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <TodosPage />
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -33,6 +32,7 @@
 import { ref, watch } from 'vue';
 import PostTable from 'src/components/PostTable.vue';
 import AlbumTable from 'src/components/AlbumTable.vue';
+import TodosPage from './TodosPage.vue';
 
 const tabs = ['posts', 'photos', 'todos'];
 const activeTab = ref(localStorage.getItem('activeTab') || tabs[0]);

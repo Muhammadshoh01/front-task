@@ -151,7 +151,7 @@ const columns: {
   name: string;
   label: string;
   field: string;
-  align?: 'left' | 'right' | 'center'; // Explicit type for `align`
+  align?: 'left' | 'right' | 'center';
   sortable?: boolean;
 }[] = [
   { name: 'title', label: 'Title', field: 'title', align: 'left', sortable: true },
